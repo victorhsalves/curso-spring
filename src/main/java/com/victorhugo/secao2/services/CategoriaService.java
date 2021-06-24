@@ -16,8 +16,12 @@ public class CategoriaService {
 
     public Categoria buscar(Integer id) {
 
+        // Forma Utilizada para Spring Boot versão 2.x.x
         Optional<Categoria> obj = repo.findById(id);
         return obj.orElse(null);
-        
+
+        // Forma utilizada para Spring Boot versões anteriores
+        // Categoria obj = repo.findOne(id);
+        // return
     }
 }
