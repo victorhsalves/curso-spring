@@ -3,8 +3,12 @@ package com.victorhugo.secao2;
 import java.util.Arrays;
 
 import com.victorhugo.secao2.domain.Categoria;
+import com.victorhugo.secao2.domain.Cidade;
+import com.victorhugo.secao2.domain.Estado;
 import com.victorhugo.secao2.domain.Produto;
 import com.victorhugo.secao2.repositories.CategoriaRepository;
+import com.victorhugo.secao2.repositories.CidadeRepository;
+import com.victorhugo.secao2.repositories.EstadoRepository;
 import com.victorhugo.secao2.repositories.ProdutoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +21,12 @@ public class Secao2Application implements CommandLineRunner {
 
 	@Autowired
 	private CategoriaRepository categoriaRepository;
-
 	@Autowired
 	private ProdutoRepository produtoRepository;
+	@Autowired
+	private EstadoRepository estadoRepository;
+	@Autowired
+	private CidadeRepository cidadeRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Secao2Application.class, args);
@@ -42,9 +49,22 @@ public class Secao2Application implements CommandLineRunner {
 		p2.getCategorias().addAll(Arrays.asList(cat1, cat2));
 		p3.getCategorias().addAll(Arrays.asList(cat1));
 
-
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
 		produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
+
+
+		Estado est1 = new Estado(null, "Minas Gerais");
+		Estado est2 = new Estado(null, "São Paulo");
+
+		Cidade c1 = new Cidade(null, "Uberlândia", est1);
+		Cidade c2 = new Cidade(null, "São Paulo", est2);
+		Cidade c3 = new Cidade(null, "Campinas", est2);
+
+		est1.getCidades().addAll(Arrays.asList(c1));
+		est2.getCidades().addAll(Arrays.asList(c2, c3));
+
+		estadoRepository.saveAll(Arrays.asList(est1, est2));
+		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 		
 	}
 
