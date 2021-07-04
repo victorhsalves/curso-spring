@@ -4,10 +4,15 @@ import java.util.Arrays;
 
 import com.victorhugo.secao2.domain.Categoria;
 import com.victorhugo.secao2.domain.Cidade;
+import com.victorhugo.secao2.domain.Cliente;
+import com.victorhugo.secao2.domain.Endereco;
 import com.victorhugo.secao2.domain.Estado;
 import com.victorhugo.secao2.domain.Produto;
+import com.victorhugo.secao2.domain.enums.TipoCliente;
 import com.victorhugo.secao2.repositories.CategoriaRepository;
 import com.victorhugo.secao2.repositories.CidadeRepository;
+import com.victorhugo.secao2.repositories.ClienteRepository;
+import com.victorhugo.secao2.repositories.EnderecoRepository;
 import com.victorhugo.secao2.repositories.EstadoRepository;
 import com.victorhugo.secao2.repositories.ProdutoRepository;
 
@@ -27,6 +32,10 @@ public class Secao2Application implements CommandLineRunner {
 	private EstadoRepository estadoRepository;
 	@Autowired
 	private CidadeRepository cidadeRepository;
+	@Autowired
+	private ClienteRepository clienteRepository;
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Secao2Application.class, args);
@@ -65,6 +74,18 @@ public class Secao2Application implements CommandLineRunner {
 
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
+
+		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "60856922340", TipoCliente.PESSOAFISICA);
+		
+		cli1.getTelefones().addAll(Arrays.asList("27363323", "98992228336"));
+
+		Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim", "65066330", cli1, c1);
+		Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "65065210", cli1, c2);
+
+		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
+
+		clienteRepository.saveAll(Arrays.asList(cli1));
+		enderecoRepository.saveAll(Arrays.asList(e1, e2));
 		
 	}
 
